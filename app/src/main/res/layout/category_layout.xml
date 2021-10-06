@@ -10,7 +10,7 @@
         android:id="@+id/categoryEditText"
         android:layout_margin="15dp"
         android:background="@drawable/edit_text_back"
-        android:hint="Enter category name"
+        android:hint="Enter name"
         android:textColor="@android:color/black"
         android:paddingStart="15dp"
         />

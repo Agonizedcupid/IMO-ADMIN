@@ -1,8 +1,8 @@
 package com.aariyan.imo_admin.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,23 +14,25 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aariyan.imo_admin.Constant.Constant;
-import com.aariyan.imo_admin.Model.CategoryModel;
+import com.aariyan.imo_admin.MainActivity;
+import com.aariyan.imo_admin.Model.SubCategoryModel;
 import com.aariyan.imo_admin.R;
 import com.aariyan.imo_admin.SubCategoryActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-import java.net.Inet4Address;
 import java.util.List;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
+public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.ViewHolder> {
 
     private Context context;
-    private List<CategoryModel> list;
-
-    public CategoryAdapter(Context context,List<CategoryModel> list) {
+    private List<SubCategoryModel> list;
+    private Activity activity;
+    public SubCategoryAdapter(Context context,List<SubCategoryModel>list, Activity activity) {
         this.context = context;
         this.list = list;
+        this.activity = activity;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -39,26 +41,19 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        CategoryModel model = list.get(position);
-        holder.categoryName.setText(model.getCategoryName());
+        SubCategoryModel model = list.get(position);
+        holder.name.setText(model.getSubCategoryName());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, SubCategoryActivity.class);
-                intent.putExtra("id",model.getId());
-                context.startActivity(intent);
-            }
-        });
-
-        holder.deleteCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Constant.categoryRef.child(model.getId()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                Constant.subCategoryRef.child(model.getId()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show();
                         notifyDataSetChanged();
+                        activity.finish();
+                        activity.onBackPressed();
                     }
                 });
             }
@@ -72,13 +67,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView categoryName;
-        private ImageView deleteCategory;
-
+        private TextView name;
+        private ImageView delete;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            categoryName = itemView.findViewById(R.id.categoryName);
-            deleteCategory = itemView.findViewById(R.id.deleteCategory);
+            name = itemView.findViewById(R.id.categoryName);
+            delete = itemView.findViewById(R.id.deleteCategory);
         }
     }
 }

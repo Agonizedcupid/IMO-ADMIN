@@ -9,8 +9,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.ContentInfo;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,9 +16,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.aariyan.imo_admin.Adapter.CategoryAdapter;
+import com.aariyan.imo_admin.Adapter.SubCategoryAdapter;
 import com.aariyan.imo_admin.Constant.Constant;
 import com.aariyan.imo_admin.Model.CategoryModel;
+import com.aariyan.imo_admin.Model.SubCategoryModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -31,24 +30,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class CategoryActivity extends AppCompatActivity {
+public class SubCategoryActivity extends AppCompatActivity {
+
+    private String id = "";
 
     private ImageView backBtn,addCategory;
 
     private RecyclerView recyclerView;
-    private ProgressBar progressBar;
+    private static ProgressBar progressBar;
 
-    private List<CategoryModel> list = new ArrayList<>();
+    private List<SubCategoryModel> list = new ArrayList<>();
 
     private Context context;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_category);
-        context = CategoryActivity.this;
+        setContentView(R.layout.activity_sub_category);
+
+        manageIntent();
+
+        context = SubCategoryActivity.this;
 
         initUI();
+    }
+
+    private void manageIntent() {
+        if (getIntent() != null) {
+            id = getIntent().getStringExtra("id");
+        }
     }
 
     private void initUI() {
@@ -64,45 +73,43 @@ public class CategoryActivity extends AppCompatActivity {
         });
 
         recyclerView = findViewById(R.id.categoryRecyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(CategoryActivity.this,2));
+        recyclerView.setLayoutManager(new GridLayoutManager(context,2));
 
         progressBar = findViewById(R.id.progressbar);
 
         //Load Category
-        loadCategory();
+        loadSubCategory();
     }
 
-    private void loadCategory() {
-        Constant.categoryRef.addValueEventListener(new ValueEventListener() {
+    public void loadSubCategory() {
+        Constant.subCategoryRef.orderByChild("parentId").equalTo(id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     list.clear();
-                    for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
-                        CategoryModel model = dataSnapshot.getValue(CategoryModel.class);
+                    for (DataSnapshot dataSnapshot:snapshot.getChildren()) {
+                        SubCategoryModel model = dataSnapshot.getValue(SubCategoryModel.class);
                         list.add(model);
                     }
-                    CategoryAdapter adapter = new CategoryAdapter(context,list);
+                    SubCategoryAdapter adapter = new SubCategoryAdapter(SubCategoryActivity.this,list,SubCategoryActivity.this);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     progressBar.setVisibility(View.GONE);
-
                 } else {
-                    Toast.makeText(context, "No Category Found!", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
+                    Toast.makeText(SubCategoryActivity.this, "No data found!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(context, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
             }
         });
     }
 
     private void openDialog() {
-        Dialog dialog = new Dialog(CategoryActivity.this);
+        Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.category_layout);
 
         EditText category = dialog.findViewById(R.id.categoryEditText);
@@ -123,18 +130,19 @@ public class CategoryActivity extends AppCompatActivity {
     }
 
     private void createCategoryOnDatabase(String category, Dialog dialog) {
-        String id = UUID.randomUUID().toString()+System.currentTimeMillis();
-        CategoryModel model = new CategoryModel(id,category);
-        Constant.categoryRef.child(id).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+        String ids = UUID.randomUUID().toString()+System.currentTimeMillis();
+        SubCategoryModel model = new SubCategoryModel(ids,category,id);
+        Constant.subCategoryRef.child(ids).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(CategoryActivity.this, "Added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Added", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
+                loadSubCategory();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(CategoryActivity.this, "Try again later!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Try again later!", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         });

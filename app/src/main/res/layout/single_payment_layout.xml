@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dp"
+    >
+
+    <TextView
+        android:id="@+id/phoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Phone Number"
+        android:layout_marginTop="5dp"
+        android:textColor="@android:color/black"
+        />
+
+    <TextView
+        android:id="@+id/points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="User Points"
+        android:textColor="@android:color/black"
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Message"
+        android:textStyle="italic"
+        android:textColor="@android:color/darker_gray"
+        />
+    <EditText
+        android:id="@+id/messageBox"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/edit_text_back"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="start"
+        android:gravity="start"
+        android:hint="Message Box"
+        android:padding="15dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Status"
+        android:textStyle="italic"
+        android:textColor="@android:color/darker_gray"
+        />
+    <EditText
+        android:id="@+id/statusBox"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/edit_text_back"
+        android:layout_gravity="start"
+        android:gravity="start"
+        android:hint="Status"
+        android:padding="15dp"
+        />
+
+    <TextView
+        android:id="@+id/dateTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Current Date and Time"
+        android:layout_marginTop="10dp"
+        android:textColor="@android:color/black"
+        android:textStyle="italic"
+        android:textSize="16sp"
+        />
+
+    <Button
+        android:id="@+id/updateUserBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Update User"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/black"
+        />
+
+
+</LinearLayout>

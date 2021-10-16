@@ -14,10 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aariyan.imo_admin.Constant.Constant;
-import com.aariyan.imo_admin.MainActivity;
 import com.aariyan.imo_admin.Model.SubCategoryModel;
+import com.aariyan.imo_admin.PaymentRequest;
 import com.aariyan.imo_admin.R;
-import com.aariyan.imo_admin.SubCategoryActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.List;
@@ -58,6 +57,21 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
                 });
             }
         });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startQuestionActivity(model);
+            }
+        });
+    }
+
+    private void startQuestionActivity(SubCategoryModel model) {
+        Intent intent = new Intent(context, PaymentRequest.class);
+        intent.putExtra("categoryId", model.getParentId());
+        intent.putExtra("subCategoryId", model.getSubCategoryName());
+        intent.putExtra("name", model.getSubCategoryName());
+        context.startActivity(intent);
     }
 
     @Override

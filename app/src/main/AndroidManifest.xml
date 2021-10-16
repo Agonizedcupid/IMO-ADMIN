@@ -13,13 +13,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IMOADMIN">
         <activity
+            android:name=".Payment"
+            android:exported="true" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".QuestionRequest"
+            android:exported="true" />
+        <activity
+            android:name=".PaymentRequest"
+            android:exported="true" />
+        <activity
             android:name=".SubCategoryActivity"
             android:exported="true" />
         <activity
             android:name=".CategoryActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".LogIn"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,6 +39,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".Notification.MyFirebaseMessaging"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

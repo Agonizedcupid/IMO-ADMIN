@@ -61,7 +61,7 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
     private String notificationStatus = "Your payment request updated!";
     private FirebaseAuth userAuth;
 
-    public PaymentAdapter(Context context,List<PaymentRequestModel> list) {
+    public PaymentAdapter(Context context, List<PaymentRequestModel> list) {
         this.context = context;
         this.list = list;
         apiSerrvice = Client.getClient("https://fcm.googleapis.com/").create(APISerrvice.class);
@@ -71,17 +71,19 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.single_payment_layout,parent,false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.single_payment_layout, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         PaymentRequestModel model = list.get(position);
-        holder.userPhone.setText(model.getPhoneNumber());
+        holder.userPhone.setText("Phone: "+model.getPhoneNumber());
         holder.statusBox.setText(model.getStatus(), TextView.BufferType.EDITABLE);
-        holder.requestedPoint.setText("Requested: "+model.getPoint()+" Points.");
-        holder.dateTime.setText(model.getDate()+"  "+model.getTime());
+        holder.requestedPoint.setText("Requested: " + model.getPoint() + " Points.");
+        holder.dateTime.setText(model.getDate() + "  " + model.getTime());
         holder.messageBox.setText(model.getMessage(), TextView.BufferType.EDITABLE);
+        holder.paymentId.setText("Pay To: " + model.getPaymentId());
+        holder.paymentMethod.setText("Method: " + model.getPaymentMethod());
         holder.updateUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,7 +100,7 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
         invitationMessage = notificationStatus;
 
         notify = true;
-        sendMessage("Admin", receiverId, notificationStatus, invitationMessage,model.getId());
+        sendMessage("Admin", receiverId, notificationStatus, invitationMessage, model.getId());
     }
 
     private void sendMessage(String s, String receiverId, String notificationStatus, String invitationMessage, String id) {
@@ -112,13 +114,13 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
 
         if (notify) {
             //assert users != null;
-            sendNotification(receiverId, notificationStatus, msg,"");
+            sendNotification(receiverId, notificationStatus, msg, "");
         }
 
         notify = false;
     }
 
-    private void sendNotification(final String receiver, final String notificationStatus, final String msg,String idForNotification) {
+    private void sendNotification(final String receiver, final String notificationStatus, final String msg, String idForNotification) {
         DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Token");
 
         Query query = tokens.orderByKey().equalTo(receiver);
@@ -144,7 +146,7 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
 
                     Sender sender = new Sender(data, token.getToken());
 
-                    Log.d("TOKEN_RESULT",token.getToken());
+                    Log.d("TOKEN_RESULT", token.getToken());
 
                     apiSerrvice.sendNotification(sender).enqueue(new Callback<MyResponse>() {
                         @Override
@@ -154,10 +156,10 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
 
                             if (response.isSuccessful()) {
                                 //Toast.makeText(LoanEnquiryDetails.this, "Notification Sent", Toast.LENGTH_SHORT).show();
-                                saveNotification(receiverId, notificationStatus, title,idForNotification);
+                                saveNotification(receiverId, notificationStatus, title, idForNotification);
                                 //Toast.makeText(context, "Invitation sent.", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(context, ""+response.message(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "" + response.message(), Toast.LENGTH_SHORT).show();
                             }
 
 
@@ -217,8 +219,8 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView userPhone,requestedPoint,dateTime;
-        private EditText messageBox,statusBox;
+        private TextView userPhone, requestedPoint, dateTime, paymentMethod, paymentId;
+        private EditText messageBox, statusBox;
         private Button updateUser;
 
         public ViewHolder(@NonNull View itemView) {
@@ -229,6 +231,9 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
             messageBox = itemView.findViewById(R.id.messageBox);
             statusBox = itemView.findViewById(R.id.statusBox);
             updateUser = itemView.findViewById(R.id.updateUserBtn);
+
+            paymentMethod = itemView.findViewById(R.id.paymentMethod);
+            paymentId = itemView.findViewById(R.id.paymentId);
         }
     }
 }

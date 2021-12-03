@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.aariyan.imo_admin.Notification.Token;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,7 +23,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 public class MainActivity extends AppCompatActivity {
 
     private CardView addQuestion;
-    private CardView questionRequestCard,paymentRequestCard;
+    private LinearLayout questionRequestCard, paymentRequestCard;
 
     public static String User_token = "";
     private FirebaseAuth userAuth;
@@ -69,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initUI() {
 
-        questionRequestCard = findViewById(R.id.questionRequestCard);
-        paymentRequestCard = findViewById(R.id.paymentRequestCard);
+        questionRequestCard = findViewById(R.id.questionRequest);
+        paymentRequestCard = findViewById(R.id.paymentRequest);
         paymentRequestCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,11 +84,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, QuestionRequest.class));
             }
         });
-        addQuestion = findViewById(R.id.addQuestionCard);
-        addQuestion.setOnClickListener(new View.OnClickListener() {
+
+        findViewById(R.id.pointBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startCategoryActivity();
+                startActivity(new Intent(MainActivity.this, PointActivity.class));
             }
         });
     }

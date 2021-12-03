@@ -36,19 +36,13 @@
             android:layout_margin="10dp"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/questionRequestCard"
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@color/secondaryColor"
-                app:cardCornerRadius="7dp"
-                app:cardElevation="7dp">
-
                 <LinearLayout
+                    android:id="@+id/questionRequest"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:padding="25dp"
+                    android:background="@drawable/single_gradient"
                     android:gravity="center">
 
                     <TextView
@@ -63,22 +57,17 @@
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/paymentRequestCard"
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_weight="1"
-                android:layout_marginTop="10dp"
-                app:cardBackgroundColor="@color/secondaryColor"
-                app:cardCornerRadius="7dp"
-                app:cardElevation="7dp">
+
 
                 <LinearLayout
+                    android:id="@+id/paymentRequest"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:padding="25dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/gradient_2"
                     android:gravity="center">
 
                     <TextView
@@ -93,98 +82,28 @@
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:visibility="gone"
+            <LinearLayout
+                android:id="@+id/pointBtn"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@color/secondaryColor"
-                app:cardCornerRadius="7dp"
-                app:cardElevation="7dp">
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:padding="25dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/single_gradient"
+                android:gravity="center">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:text="Point +/-"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="Notification"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@color/secondaryColor"
-                app:cardCornerRadius="7dp"
-                app:cardElevation="7dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="User List"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:visibility="gone"
-                android:id="@+id/addQuestionCard"
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@color/secondaryColor"
-                app:cardCornerRadius="7dp"
-                app:cardElevation="7dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="Add Question"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
+            </LinearLayout>
 
         </LinearLayout>
 

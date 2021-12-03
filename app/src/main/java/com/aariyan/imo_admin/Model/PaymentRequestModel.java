@@ -9,10 +9,12 @@ public class PaymentRequestModel {
     private String phoneNumber;
     private String message;
     private String status;
+    private String paymentMethod;
+    private String paymentId;
 
     public PaymentRequestModel() {}
 
-    public PaymentRequestModel(String id, String point, String userId, String date, String time, String phoneNumber, String message, String status) {
+    public PaymentRequestModel(String id, String point, String userId, String date, String time, String phoneNumber, String message, String status, String paymentMethod, String paymentId) {
         this.id = id;
         this.point = point;
         this.userId = userId;
@@ -21,6 +23,24 @@ public class PaymentRequestModel {
         this.phoneNumber = phoneNumber;
         this.message = message;
         this.status = status;
+        this.paymentMethod = paymentMethod;
+        this.paymentId = paymentId;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(String paymentId) {
+        this.paymentId = paymentId;
     }
 
     public String getStatus() {

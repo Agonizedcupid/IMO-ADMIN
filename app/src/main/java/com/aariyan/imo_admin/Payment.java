@@ -18,12 +18,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Payment extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private List<PaymentRequestModel> list = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,11 +42,12 @@ public class Payment extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     list.clear();
-                    for (DataSnapshot dataSnapshot:snapshot.getChildren()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         PaymentRequestModel model = dataSnapshot.getValue(PaymentRequestModel.class);
-                        list.add(model);
+                        if (model.getStatus().toLowerCase(Locale.ROOT).equals("pending"))
+                            list.add(model);
                     }
-                    PaymentAdapter adapter = new PaymentAdapter(Payment.this,list);
+                    PaymentAdapter adapter = new PaymentAdapter(Payment.this, list);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     progressBar.setVisibility(View.GONE);

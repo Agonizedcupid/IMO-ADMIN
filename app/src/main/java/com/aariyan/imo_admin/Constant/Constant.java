@@ -16,6 +16,7 @@ public class Constant {
     public static DatabaseReference questionRef = FirebaseDatabase.getInstance().getReference().child("QUIZ").child("Questions");
     public static DatabaseReference notificationRef = FirebaseDatabase.getInstance().getReference().child("Notification");
     public static DatabaseReference paymentRef = FirebaseDatabase.getInstance().getReference().child("Payment");
+    public static DatabaseReference pointRef = FirebaseDatabase.getInstance().getReference().child("Point");
 
 
     public static  String getCurrentDate() {

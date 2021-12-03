@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IMOADMIN">
         <activity
+            android:name=".PointActivity"
+            android:exported="true" />
+        <activity
             android:name=".Payment"
             android:exported="true" />
         <activity
